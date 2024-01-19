@@ -167,7 +167,7 @@ function App() {
   return (
     <>
       <Box>
-        { !network ? <p><span style={{color: '#aa4ee4'}}>choose </span><span style={{color: '#75befb'}}>your</span> <span style={{color: '#5b6bf5'}}>network</span></p> : <p>chainId: {chainId}</p> }
+        { !network ? <p><span style={{color:'#5b6bf5'}}>choose </span><span style={{color: '#75befb'}}>your</span> <span style={{color: '#aa4ee4'}}>network</span></p> : <p>chainId: {chainId}</p> }
         <br/>
         <div style={{width: '700px'}}>
         {
