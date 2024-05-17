@@ -43,6 +43,11 @@ const networks = [
     chainHandle: 'optimism',
   },
   {
+    network: 'Astar zkEVM',
+    chainId: 3776,
+    chainHandle: 'astar-zkevm',
+  },
+  {
     network: 'Avalanche',
     chainId: 43114,
     chainHandle: 'avalanche',
@@ -63,6 +68,11 @@ const networks = [
     chainHandle: 'gnosis',
   },
   {
+    network: 'Xai',
+    chainId: 660279,
+    chainHandle: 'xai',
+  },
+  {
     network: 'Ethereum Sepolia',
     chainId: 11155111,
     chainHandle: 'sepolia',
@@ -73,9 +83,18 @@ const networks = [
     chainHandle: 'arbitrum-sepolia',
   },
   {
+    network: 'Avalanche Testnet',
+    chainId: 43113,
+    chainHandle: 'avalanche-testnet',
+  },
+  {
     network: 'Base Sepolia',
     chainId: 84532,
     chainHandle: 'base-sepolia',
+  },{
+    network: 'XR Sepolia',
+    chainId: 2730,
+    chainHandle: 'xr-sepolia',
   },
   {
     network: 'Optimism Sepolia',
@@ -83,16 +102,38 @@ const networks = [
     chainHandle: 'optimism-sepolia',
   },
   {
-    network: 'Polygon Mumbai',
-    chainId: 80001,
-    chainHandle: 'mumbai',
+    network: 'Polygon Amoy',
+    chainId: 80002,
+    chainHandle: 'amoy',
+  },
+  {
+    network: 'Astar zKyoto Testnet',
+    chainId: 6038361,
+    chainHandle: 'astar-zkyoto',
   },
   {
     network: 'BSC Testnet',
     chainId: 97,
     chainHandle: 'bsc-testnet',
+  },
+  {
+    network: 'Xai Sepolia',
+    chainId: 37714555429,
+    chainHandle: 'xai-sepolia',
   }
 ]
+
+const ColorfulText = ({ text }: any) => {
+  const colors = ['#5b6bf5', '#75befb', '#aa4ee4'];  // Define your colors
+
+  const coloredText = text.split('').map((char: any, index:any) => (
+    <span key={index} style={{ color: colors[index % colors.length] }}>
+      {char}
+    </span>
+  ));
+
+  return <p>{coloredText}</p>;
+};
 
 function App() {
   const copyTextToClipboard = async (text: any) => {
@@ -117,7 +158,7 @@ function App() {
   const [chainId, setChainId] = useState<number | null>(null)
 
   const connect = async () => {
-    sequence.initWallet({defaultNetwork: network, projectAccessKey: 'tDhYCwkYMCT6dPrEPpqS02MBAAAAAAAA'} as any)
+    sequence.initWallet({defaultNetwork: network, projectAccessKey: 'AQAAAAAAAABem5byI8C2p-GSKx00BeuvaVo'} as any)
     const wallet = sequence.getWallet()
     const details = await wallet.connect({
       app: 'eth auth proof viewer',
@@ -167,7 +208,7 @@ function App() {
   return (
     <>
       <Box>
-        { !network ? <p><span style={{color:'#5b6bf5'}}>choose </span><span style={{color: '#75befb'}}>your</span> <span style={{color: '#aa4ee4'}}>network</span></p> : <p>chainId: {chainId}</p> }
+      {!network ? <ColorfulText text="choose your network" /> : <p>chainId: {chainId}</p>}
         <br/>
         <div style={{width: '700px'}}>
         {
