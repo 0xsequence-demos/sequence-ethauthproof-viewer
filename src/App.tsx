@@ -1,22 +1,28 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import "./App.css";
 
 import { Button, Card, Select } from "@0xsequence/design-system";
 import { sequence } from "0xsequence";
 import { Session } from "@0xsequence/auth";
 import { ethers } from "ethers";
-import { Network, networks } from "./networks";
+// import { Network, networks } from "./networks";
 import CopyableText from "./CopyableText";
+import { allNetworks } from "@0xsequence/network";
 
 function App() {
   const projectAccessKey = import.meta.env.VITE_PROJECT_ACCESS_KEY;
 
-  const [network, setNetwork] = useState<Network | undefined>();
+  const [network, setNetwork] = useState<sequence.network.NetworkConfig | undefined>();
   const [proof, setProof] = useState<string>("");
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [privateKey, setPrivateKey] = useState<string>("");
 
+  useEffect(()=> {
+    setProof("")
+  },[network])
+
   const connectAndGetProof = useCallback(async (chainId: number) => {
+    console.log(chainId)
     sequence.initWallet(projectAccessKey, {
       defaultNetwork: chainId,
     });
@@ -63,13 +69,13 @@ function App() {
   }, []);
 
   const dropdownOptions = useMemo(() => {
-    const dropdownNetworks = networks.map((n) => {
+    const dropdownNetworks = allNetworks.map((n) => {
       return {
-        label: n.network,
-        value: n.network,
+        label: n.title || n.name,
+        value: n.name,
         disabled: false,
       };
-    });
+    }).sort((a,b) => a.label.localeCompare(b.label));
     return [
       {
         label: "Choose your network",
@@ -78,7 +84,6 @@ function App() {
       },
     ].concat(dropdownNetworks);
   }, []);
-
   return (
     <>
       <Card>
@@ -94,7 +99,7 @@ function App() {
           options={dropdownOptions}
           defaultValue="no-network"
           onValueChange={(v) => {
-            setNetwork(networks.find((n) => n.network === v));
+            setNetwork(allNetworks.find((n) => n.name === v));
           }}
         />
 
