@@ -12,17 +12,19 @@ import { allNetworks } from "@0xsequence/network";
 function App() {
   const projectAccessKey = import.meta.env.VITE_PROJECT_ACCESS_KEY;
 
-  const [network, setNetwork] = useState<sequence.network.NetworkConfig | undefined>();
+  const [network, setNetwork] = useState<
+    sequence.network.NetworkConfig | undefined
+  >();
   const [proof, setProof] = useState<string>("");
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [privateKey, setPrivateKey] = useState<string>("");
 
-  useEffect(()=> {
-    setProof("")
-  },[network])
+  useEffect(() => {
+    setProof("");
+  }, [network]);
 
   const connectAndGetProof = useCallback(async (chainId: number) => {
-    console.log(chainId)
+    console.log(chainId);
     sequence.initWallet(projectAccessKey, {
       defaultNetwork: chainId,
     });
@@ -69,13 +71,15 @@ function App() {
   }, []);
 
   const dropdownOptions = useMemo(() => {
-    const dropdownNetworks = allNetworks.map((n) => {
-      return {
-        label: n.title || n.name,
-        value: n.name,
-        disabled: false,
-      };
-    }).sort((a,b) => a.label.localeCompare(b.label));
+    const dropdownNetworks = allNetworks
+      .map((n) => {
+        return {
+          label: n.title || n.name,
+          value: n.name,
+          disabled: false,
+        };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
     return [
       {
         label: "Choose your network",
