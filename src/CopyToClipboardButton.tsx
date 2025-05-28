@@ -1,9 +1,10 @@
+import { ReactNode } from "react";
 import { toast } from "sonner";
 export function CopyToClipboardButton({
   children,
   value,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   value: string;
   asChild?: boolean;
